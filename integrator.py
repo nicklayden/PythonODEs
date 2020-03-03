@@ -99,7 +99,7 @@ if __name__ == "__main__":
     for i in range(len(z_init)):
         z0 = [z_init[i],y_init[i]]
         solve(scalarfield,z0,params)
-
+    plt.show()
 
 
 

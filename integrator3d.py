@@ -75,12 +75,27 @@ if __name__ == "__main__":
     # Define a shared figure that all solutions will be plotted on
     fig = plt.figure()
     ax = plt.axes(projection="3d")
+
+
+    # The cosmological constant/ bifurcation parameter and critical points
+    lam = np.sqrt(3) - 0.1
+    alpha = lam/np.sqrt(6)
+    beta = np.sqrt(1- (lam**2/6))
+    gamma = np.sqrt(6)/(3*lam)
+    epsilon = 2./(np.sqrt(3)*lam)
+    # Plot the critical points ( ignoring mirrored points, let y > 0 )
+    ax.scatter(0,0,0,c='r')
+    ax.scatter(-1,0,0,c='r')
+    ax.scatter(1,0,0,c='r')
+    ax.scatter(0,0,1,c='r')
+    ax.scatter(-alpha,beta,0,c='g')
+    ax.scatter(-gamma,epsilon,0,c='r')
     
     # Create initial conditions inside the sphere of radius 1. (Actually in an
     # octant of the sphere, solution is mirrored everywhere else!)
     N_ic = 25
-    height = 0.1
-    width = 0.1
+    height = 0.5
+    width = 0.01
     x_init = np.linspace(-sphere(height,width),sphere(height,width),N_ic)
     y_init = [height for i in range(N_ic)]
     z_init = [width for i in range(N_ic)]
@@ -92,7 +107,7 @@ if __name__ == "__main__":
     # Since I only have 1 parameter, I needed to add a comma at the end to make 
     # python think it was
     # actually a tuple.
-    params = (6,)
+    params = (lam,)
     
 
     # Solve for a whole set of initial conditions
@@ -100,7 +115,7 @@ if __name__ == "__main__":
     for i in range(len(z_init)):
         z0 = [x_init[i],y_init[i],z_init[i]]
         solve(scalarfield_cosm,z0,params)
-
+    plt.show()
 
 
 
